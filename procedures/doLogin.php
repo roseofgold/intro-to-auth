@@ -9,7 +9,7 @@ if (empty($user))
     redirect('/login.php');
 }
 
-if (!password_verify(request()->get('password',$user['password'])))
+if (!password_verify(request()->get('password'),$user['password']))
 {
     $session->getFlashBag()->add('error','Invalid password');
     redirect('/login.php');
