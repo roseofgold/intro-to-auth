@@ -14,3 +14,11 @@ function saveUserSession($user)
 
     $session->getFlashBag()->add('success', 'Successfully Logged In');
 }
+
+function requireAuth() {
+    if (!isAuthenticated()){
+        global $session;
+        $session->getFlashBag()->add('error','Not Authorized');
+        redirect('/login.php');
+    }
+}
