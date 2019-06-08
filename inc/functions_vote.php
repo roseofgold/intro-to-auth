@@ -2,7 +2,24 @@
 /**
  * Functions to interface with `votes` table
  */
-function vote($bookId, $score, $userId = null)
+function getUserVote($bookId, $userId = 0)
+{
+    global $db;
+
+    try{
+        $query = "SELECT value FROM votes "
+        . " WHERE book_id = :bookId"
+        . " AND user_id = :userId";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':bookId',$bookId);
+        $stmt->bindParam(':userId',$userId);
+        $stmt->execute();
+        return (int) $stmt->fetchColum();
+    } catch (\Exception $e) {
+        throw $e;
+    }
+}
+ function vote($bookId, $score, $userId = null)
 {
     global $db;
     if (empty($userId)) {
