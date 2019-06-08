@@ -13,9 +13,11 @@
             <div class="media-body">
               <h4 class="media-heading"><?php echo $book['name']; ?></h4>
               <p><?php echo $book['description']; ?></p>
+              <?php if(isAdmin() || isOwner($book['owner_id'])) : ?>
                 <p>
                 <span><a href="/edit.php?bookId=<?php echo $book['id']; ?>">Edit</a> | </span>
                 <span><a href="/procedures/deleteBook.php?bookId=<?php echo $book['id']; ?>">Delete</a></span>
                 </p>
+                <?php endif;?>
             </div>
         </div>
