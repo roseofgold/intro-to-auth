@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../inc/bootstrap.php';
-$requireAuth();
+requireAuth();
 
 $book = getBook(request()->get('bookId'));
 if (!isAdmin() && !isOwner($book['owner_id'])){
