@@ -33,3 +33,6 @@ if (!updatePassword($hashed,$user['id']))
     $session->getFlashBag()->add('error','Could not update the password. Please try again.');
     redirect('/account.php');
 }
+
+$session->getFlashBag()->add('success','Password Updated');
+redirect('/account.php');
