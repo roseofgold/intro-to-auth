@@ -28,3 +28,32 @@ function getAuthenticatedUser()
     global $session;
     return findUserById($session->get('auth_user_id'));
 }
+
+function isAdmin()
+{
+    if (!isAuthenticated()){
+        return false;
+    }
+
+    global $session;
+    return $session->get('auth_roles') ===1;
+}
+
+function requireAdmin()
+{
+    if(!isAdmin()){
+        global $session;
+        $session->getFlashBag()->add('error','Not Authorized');
+        redirect('/login.php');
+    }
+}
+
+function isOwner($ownerId)
+{
+    if (!isAuthenticated()){
+        return false;
+    }
+
+    global $session;
+    return $ownerID == $session->get('auth_user_id');
+}
