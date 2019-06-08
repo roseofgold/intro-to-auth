@@ -36,7 +36,7 @@ function isAdmin()
     }
 
     global $session;
-    return $session->get('auth_roles') ===1;
+    return $session->get('auth_roles') === 1;
 }
 
 function requireAdmin()
