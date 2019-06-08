@@ -14,7 +14,7 @@ function getUserVote($bookId, $userId = 0)
         $stmt->bindParam(':bookId',$bookId);
         $stmt->bindParam(':userId',$userId);
         $stmt->execute();
-        return (int) $stmt->fetchColum();
+        return (int) $stmt->fetchColumn();
     } catch (\Exception $e) {
         throw $e;
     }
