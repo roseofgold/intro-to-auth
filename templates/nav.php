@@ -23,6 +23,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
             <?php if (isAuthenticated()) : ?>
+                <li><a href="/account.php">My Account</a></li>
                 <li><a href="/procedures/doLogout.php">Logout</a></li>
             <?php else: ?>
                 <li><a href="/login.php">Login</a></li>
