@@ -2,12 +2,12 @@
         <?php if (isAuthenticated()) : $user = getAuthenticatedUser();?>
             <div class="media-left">
                 <div class="btn-group-vertical" role="group">
-                    <a href="/procedures/vote.php?vote=up&bookId=<?php echo $book['id']; ?>">
+                    <a href="/procedures/vote.php?vote=1&bookId=<?php echo $book['id']; ?>">
                     <span class="glyphicon glyphicon-triangle-top<?php 
                     if (getUserVote($book['id'],$user['id']) == 1) echo ' orange';
                     ?>"></span></a>
                     <span><?php if (isset($book['score'])) echo $book['score']; else echo '0'; ?></span>
-                    <a href="/procedures/vote.php?vote=down&bookId=<?php echo $book['id']; ?>">
+                    <a href="/procedures/vote.php?vote=-1&bookId=<?php echo $book['id']; ?>">
                     <span class="glyphicon glyphicon-triangle-bottom<?php 
                     if (getUserVote($book['id'],$user['id']) == -1) echo ' orange';
                     ?>"></span></a>
