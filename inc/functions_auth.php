@@ -22,3 +22,9 @@ function requireAuth() {
         redirect('/login.php');
     }
 }
+
+function getAuthenticatedUser()
+{
+    global $session;
+    return findUserById($session->get('auth_user_id'));
+}
