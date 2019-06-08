@@ -55,5 +55,5 @@ function isOwner($ownerId)
     }
 
     global $session;
-    return $ownerID == $session->get('auth_user_id');
+    return $ownerId == $session->get('auth_user_id');
 }
