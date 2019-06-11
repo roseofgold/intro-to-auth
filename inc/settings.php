@@ -1,5 +1,13 @@
 <?php
 /*
+ * Handle Exceptions
+ */
+function exception_handler($e) {
+    die($e->getMessage());
+  }
+  set_exception_handler("exception_handler");
+  
+/*
  * Set up database connection
  */
 try {
@@ -24,17 +32,17 @@ $session->start();
 
 // 2. request \Symfony\Component\HttpFoundation\Request
 function request() {
-    return \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+  return \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 }
 
 // 3. redirect \Symfony\Component\HttpFoundation\Response
 function redirect($path, $extra = []) {
-    $response = \Symfony\Component\HttpFoundation\Response::create(null, \Symfony\Component\HttpFoundation\Response::HTTP_FOUND, ['Location' => $path]);
-    if (key_exists('cookies',$extra)) {
-        foreach ($extra['cookies'] as $cookie){
-            $response->header->setCookie($cookie);
-        }
+  $response = \Symfony\Component\HttpFoundation\Response::create(null, \Symfony\Component\HttpFoundation\Response::HTTP_FOUND, ['Location' => $path]);
+  if (key_exists('cookies', $extra)) {
+    foreach ($extra['cookies'] as $cookie) {
+      $response->headers->setCookie($cookie);
     }
-    $response->send();
-    exit;
+  }
+  $response->send();
+  exit;
 }
