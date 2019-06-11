@@ -5,7 +5,7 @@ function isAuthenticated()
     return $session->get('auth_logged_in',false);
 }
 
-function saveUserSession($user)
+function saveUserData($user)
 {
     global $session;
     $session->set('auth_logged_in',true);
@@ -13,6 +13,15 @@ function saveUserSession($user)
     $session->set('auth_roles',(int) $user['role_id']);
 
     $session->getFlashBag()->add('success', 'Successfully Logged In');
+    $cookieId = new Symfony\Component\HttpFoundation\Cookie(
+        'auth_user_id',
+        (int) $user['id']
+    );
+    $cookieRoles = new Symfony\Component\HttpFoundation\Cookie(
+        'auth_roles',
+        (int) $user['role_id']
+    );
+    redirect('/',['cookies' => [$cookieId,$cookieRoles]]);
 }
 
 function requireAuth() {
@@ -57,3 +66,4 @@ function isOwner($ownerId)
     global $session;
     return $ownerId == $session->get('auth_user_id');
 }
+
