@@ -7,7 +7,7 @@
 <div class="form-group">
     <label for="description" class="col-sm-2 control-label">Description</label>
     <div class="col-sm-10">
-        <textarea id="description" name="description" class="form-control" rows="5" placeholder="Description of the book"><?php if (isset($bookDescription)) echo $bookDescription; ?></textarea>
+        <textarea name="description" class="form-control" rows="5" placeholder="Description of the book"><?php if (isset($bookDescription)) echo $bookDescription; ?></textarea>
     </div>
 </div>
 <div class="form-group">

@@ -3,11 +3,10 @@ require_once __DIR__ .'/../inc/bootstrap.php';
 requireAuth();
 
 $book = getBook(request()->get('bookId'));
-if (!isAdmin() && !isOwner($book['owner_id'])){
-    $session->getFlashBag()->add('error','Not Authorized');
-    redirect('/books.php');
+if (!isAdmin() && !isOwner($book['owner_id'])) {
+   $session->getFlashBag()->add('error', 'Not Authorized');
+   redirect('/books.php');
 }
-
 $bookTitle = request()->get('title');
 $bookDescription = request()->get('description');
 
