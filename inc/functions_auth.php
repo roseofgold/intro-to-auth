@@ -48,14 +48,22 @@ function getAuthenticatedUser()
 function saveUserData($user)
 {
   global $session;
-  
   $session->getFlashBag()->add('success', 'Successfully Logged In');
-  $data = [
-    'auth_user_id' => (int) $user['id'],
-    'auth_roles' => (int) $user['role_id']
-  ];
+  
   $expTime = time() + 3600;
-  $cookie = setAuthCookie(json_encode($data), $expTime);
+  $jwt = Firebase\JWT\JWT::encode(
+    [
+      'iss' => request()->getBaseUrl(),
+      'sub' => (int) $user['id'],
+      'exp' => $expTime,
+      'iat' => time(),
+      'nbf' => time(),
+      'auth_roles' => (int) $user['role_id']
+    ],
+    getenv("SECRET_KEY"),
+    'HS256'
+  );
+  $cookie = setAuthCookie($jwt, $expTime);
   redirect('/', ['cookies' => [$cookie]]);
 }
 function setAuthCookie($data, $expTime)
@@ -73,9 +81,22 @@ function setAuthCookie($data, $expTime)
 }
 function decodeAuthCookie($prop = null)
 {
-  $cookie = json_decode(request()->cookies->get('auth'));
+  try {
+    
+    Firebase\JWT\JWT::$leeway=1;
+    $cookie = Firebase\JWT\JWT::decode(
+      request()->cookies->get('auth'),
+      getenv("SECRET_KEY"),
+      ['HS256']
+    );
+  } catch (Exception $e) {
+    return false;
+  }
   if ($prop === null) {
     return $cookie;
+  }
+  if ($prop == 'auth_user_id') {
+    $prop = 'sub';
   }
   if (!isset($cookie->$prop)) {
     return false;
