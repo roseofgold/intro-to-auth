@@ -13,15 +13,13 @@ function saveUserData($user)
     $session->set('auth_roles',(int) $user['role_id']);
 
     $session->getFlashBag()->add('success', 'Successfully Logged In');
-    $cookieId = new Symfony\Component\HttpFoundation\Cookie(
-        'auth_user_id',
-        (int) $user['id']
-    );
-    $cookieRoles = new Symfony\Component\HttpFoundation\Cookie(
-        'auth_roles',
-        (int) $user['role_id']
-    );
-    redirect('/',['cookies' => [$cookieId,$cookieRoles]]);
+    $data = [
+        'auth_user_id' => (int) $user['id'],
+        'auth_roles' => (int) $user['role_id']
+    ];
+    $expTime = time() + 3600;
+    $cookie = setAuthCookie(json_encode($data), $expTime);
+    redirect('/',['cookies' => [$cookie]]);
 }
 
 function requireAuth() {
@@ -67,3 +65,17 @@ function isOwner($ownerId)
     return $ownerId == $session->get('auth_user_id');
 }
 
+function setAuthCookie($data, $expTime)
+{
+    $cookie = new Symfony\Component\HttpFoundation\Cookie(
+        'auth',
+        $data,
+        $expTime,
+        '/',
+        '.localhost',
+        false,
+        true
+    );
+
+    return $cookie;
+}
