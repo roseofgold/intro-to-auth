@@ -4,7 +4,7 @@
     "type": "project",
     "require": {
         "symfony/http-foundation": "~3.1",
-        "firebase/php-jwt": "^5.0",
+        "firebase/php-jwt": "^6.0",
         "vlucas/phpdotenv": "^3.3"
     },
     "license": "MIT",
